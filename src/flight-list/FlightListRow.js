@@ -18,7 +18,8 @@ const FlightListRow = ({ data }) => (
 
       img {
         height: auto;
-        width: 90px;
+        padding: 0 10px;
+        width: 80px;
       }
     `}</style>
   </li>
