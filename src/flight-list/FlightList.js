@@ -21,7 +21,7 @@ const FlightList = props => {
   return (
     <Layout>
       <LayoutTitle center>
-        Available flights
+        Available flights ({ _flightData.length })
       </LayoutTitle>
 
       <label htmlFor="filter">
