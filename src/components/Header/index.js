@@ -5,7 +5,7 @@ import logo from '../../images/logo.svg';
 import Wrapper from '../Wrapper';
 import styles from './styles.js';
 
-const Header = ({ logout }) => (
+const Header = () => (
   <aside className="Header">
     <Wrapper>
       <div className="Header__wrapper">
@@ -27,36 +27,24 @@ const Header = ({ logout }) => (
               className="Header__nav-link"
               to="/"
             >
-              Dashboard
+              Flights
             </Link>
           </li>
           <li className="Header__nav-item">
             <Link
               className="Header__nav-link"
-              to="/pages"
+              to="/airports"
             >
-              Pages
+              Airports
             </Link>
           </li>
           <li className="Header__nav-item">
             <Link
               className="Header__nav-link"
-              to="/posts"
+              to="/manage"
             >
-              Posts
+              Manage
             </Link>
-          </li>
-          <li className="Header__nav-item">
-            <a
-              className="Header__nav-link"
-              href="#logout"
-              onClick={e => {
-                e.preventDefault();
-                logout();
-              }}
-            >
-              Logout
-            </a>
           </li>
         </ul>
       </div>

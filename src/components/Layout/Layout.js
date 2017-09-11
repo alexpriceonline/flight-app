@@ -1,10 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import Header from '../Header';
 import Wrapper from '../Wrapper';
 
-const Layout = ({ app, children }) => (
+const Layout = ({ children }) => (
   <div>
     <Header />
     <Wrapper>
@@ -12,6 +11,7 @@ const Layout = ({ app, children }) => (
         { children }
       </main>
     </Wrapper>
+
     <style jsx>{`
       main {
         margin-top: 80px;
@@ -21,10 +21,4 @@ const Layout = ({ app, children }) => (
   </div>
 );
 
-function mapStateToProps(state) {
-  return { ...state };
-}
-
-export default connect(
-  mapStateToProps
-)(Layout);
+export default Layout;

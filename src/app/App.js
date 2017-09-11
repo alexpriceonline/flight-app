@@ -6,14 +6,18 @@ import './reset.css';
 import './fonts.css';
 
 // App routes
-import Dashboard from '../dashboard/Dashboard';
+import FlightList from '../flight-list/FlightList';
+import AirportList from '../airport-list/AirportList';
+import ManageFlights from '../manage-flights/ManageFlights';
 
 // import Pages, { EditPage } from '../pages';
 // <Route exact path="/pages" component={Pages} />
 
 const App = () => (
   <div>
-    <Route exact path="/" component={Dashboard} />
+    <Route exact path="/" component={FlightList} />
+    <Route exact path="/airports" component={AirportList} />
+    <Route exact path="/manage" component={ManageFlights} />
 
     <style jsx global>{`
       html {
