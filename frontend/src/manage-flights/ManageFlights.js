@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import insertFlight from './actions/insert-flight';
-import { white, green, black } from '../constants/styles';
+import { black } from '../constants/styles';
 import Layout, { LayoutTitle } from '../components/Layout';
 import Button from '../components/Button';
 

@@ -23,6 +23,7 @@ const enhancedFlightData = flightData.map(data => {
   const org = airports.find(airport => data.org === airport.iata) || {};
   const dest = airports.find(airport => data.dest === airport.iata) || {};
 
+  // Collect the number of appearances of each origin
   if (airportsByAppearance.has(data.org)) {
     const num = airportsByAppearance.get(data.org);
     airportsByAppearance.set(data.org, num + 1);
@@ -30,6 +31,7 @@ const enhancedFlightData = flightData.map(data => {
     airportsByAppearance.set(data.org, 1);
   }
 
+  // Collect the number of appearances of each destination
   if (airportsByAppearance.has(data.dest)) {
     const num = airportsByAppearance.get(data.dest);
     airportsByAppearance.set(data.dest, num + 1);
@@ -48,8 +50,6 @@ airportsByAppearance = [...airportsByAppearance.entries()];
 airportsByAppearance = airportsByAppearance.sort((a, b) => b[1] - a[1]);
 
 app.get('/', function(req, res) {
-
-  // TODO: Move the read file to here
   res.json({
     flights: enhancedFlightData,
     airports: airportsByAppearance
