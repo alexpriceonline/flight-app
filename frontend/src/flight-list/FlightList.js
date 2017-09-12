@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { UPDATE_FILTER, UPDATE_PAGE } from './constants';
@@ -8,85 +8,94 @@ import FlightListRow from './FlightListRow';
 
 const PAGEBY = 30;
 
-const FlightList = props => {
-  const {
-    availableOrgs,
-    flightData,
-    selectedFilter,
-    selectedPage,
-    updateFilter,
-    updatePagination,
-  } = props;
+class FlightList extends Component {
 
-  // Filter the flight data based on origin iata code
-  const filteredFlightData = selectedFilter !== "null" ?
-    flightData.filter(f => f.org === selectedFilter) :
-    flightData;
+  // When we navigate to another page we should reset
+  // the filter
+  componentWillUnmount() {
+    this.props.updateFilter('null');
+  }
 
-  // Slice the data into pages
-  const paginatedData = filteredFlightData.slice(
-    (selectedPage * PAGEBY), ((selectedPage + 1) * PAGEBY)
-  );
+  render() {
+    const {
+      availableOrgs,
+      flightData,
+      selectedFilter,
+      selectedPage,
+      updateFilter,
+      updatePagination,
+    } = this.props;
 
-  const numFlights = filteredFlightData.length;
+    // Filter the flight data based on origin iata code
+    const filteredFlightData = selectedFilter !== 'null' ?
+      flightData.filter(f => f.org === selectedFilter) :
+      flightData;
 
-  return (
-    <Layout>
-      <LayoutTitle center>
-        Available flights ({ numFlights })
-      </LayoutTitle>
+    // Slice the data into pages
+    const paginatedData = filteredFlightData.slice(
+      (selectedPage * PAGEBY), ((selectedPage + 1) * PAGEBY)
+    );
 
-      <label htmlFor="filter">
-        <span>Filter by origin airport:</span>
-        <select
-          id="filter"
-          onChange={e => updateFilter(e.target.value)}
-          value={selectedFilter}
-        >
-          <option value="null">
-            Show all
-          </option>
-          { availableOrgs.map(org => (
-              <option key={org} value={org}>
-                {org}
-              </option>
+    const numFlights = filteredFlightData.length;
+
+    return (
+      <Layout>
+        <LayoutTitle center>
+          Available flights ({ numFlights })
+        </LayoutTitle>
+
+        <label htmlFor="filter">
+          <span>Filter by origin airport:</span>
+          <select
+            id="filter"
+            onChange={e => updateFilter(e.target.value)}
+            value={selectedFilter}
+          >
+            <option value="null">
+              Show all
+            </option>
+            { availableOrgs.map(org => (
+                <option key={org} value={org}>
+                  {org}
+                </option>
+              ))
+            }
+          </select>
+        </label>
+
+        <ul>
+          { paginatedData.map((flight, i) => (
+              <FlightListRow key={i} flight={flight} />
             ))
           }
-        </select>
-      </label>
+        </ul>
 
-      <ul>
-        { paginatedData.map((flight, i) => (
-            <FlightListRow key={i} flight={flight} />
-          ))
-        }
-      </ul>
-
-      {/* Hide pagination if not needed */}
-      { numFlights > PAGEBY &&
-        <Pagination
-          numPages={numFlights / PAGEBY}
-          selectedPage={selectedPage}
-          updatePagination={updatePagination}
-        />
-      }
-
-      <style jsx>{`
-        label {
-          display: block;
-          margin: 5px 0 10px;
-          text-align: center;
+        {/* Hide pagination if not needed */}
+        { numFlights > PAGEBY &&
+          <Pagination
+            numPages={numFlights / PAGEBY}
+            selectedPage={selectedPage}
+            updatePagination={updatePagination}
+          />
         }
 
-        select {
-          margin: 0 0 0 10px;
-          position: relative;
-          top: -1px;
-        }
-      `}</style>
-    </Layout>
-  );
-};
+        <style jsx>{`
+          label {
+            display: block;
+            margin: 5px 0 10px;
+            text-align: center;
+          }
+
+          select {
+            margin: 0 0 0 10px;
+            position: relative;
+            top: -1px;
+          }
+        `}</style>
+      </Layout>
+    );
+  }
+}
 
 function mapStateToProps(state) {
   return { ...state.app, ...state.flightList };
