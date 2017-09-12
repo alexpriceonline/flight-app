@@ -1,7 +1,11 @@
-import { UPDATE_FILTER } from './constants';
+import {
+  UPDATE_FILTER,
+  UPDATE_PAGE,
+} from './constants';
 
 const initalState = {
   selectedFilter: "null",
+  selectedPage: 0,
 };
 
 const reducer = function(state = initalState, action = {}) {
@@ -10,6 +14,11 @@ const reducer = function(state = initalState, action = {}) {
     case UPDATE_FILTER:
       return Object.assign({}, state, {
         selectedFilter: action.filter,
+      });
+
+    case UPDATE_PAGE:
+      return Object.assign({}, state, {
+        selectedPage: action.page,
       });
 
     default:

@@ -1,27 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { UPDATE_FILTER } from './constants';
+import { UPDATE_FILTER, UPDATE_PAGE } from './constants';
 import Layout, { LayoutTitle } from '../components/Layout';
+import Pagination from '../components/Pagination';
 import FlightListRow from './FlightListRow';
+
+const PAGEBY = 30;
 
 const FlightList = props => {
   const {
-    flightData,
     availableOrgs,
+    flightData,
     selectedFilter,
+    selectedPage,
     updateFilter,
+    updatePagination,
   } = props;
 
   // Filter the flight data based on origin iata code
-  const _flightData = selectedFilter !== "null" ?
+  const filteredFlightData = selectedFilter !== "null" ?
     flightData.filter(f => f.org.iata === selectedFilter) :
     flightData;
+
+  // Slice the data into pages
+  const paginatedData = filteredFlightData.slice(
+    (selectedPage * PAGEBY), ((selectedPage + 1) * PAGEBY)
+  );
+
+  const numFlights = filteredFlightData.length;
 
   return (
     <Layout>
       <LayoutTitle center>
-        Available flights ({ _flightData.length })
+        Available flights ({ numFlights })
       </LayoutTitle>
 
       <label htmlFor="filter">
@@ -44,11 +56,20 @@ const FlightList = props => {
       </label>
 
       <ul>
-        { _flightData.map((data, i) => (
+        { paginatedData.map((data, i) => (
             <FlightListRow key={i} data={data} />
           ))
         }
       </ul>
+
+      {/* Hide pagination if not needed */}
+      { numFlights > PAGEBY &&
+        <Pagination
+          numPages={numFlights / PAGEBY}
+          selectedPage={selectedPage}
+          updatePagination={updatePagination}
+        />
+      }
 
       <style jsx>{`
         label {
@@ -74,7 +95,13 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     updateFilter: value => {
+
+      // Make sure we page back to 0 when we filter
+      dispatch({ type: UPDATE_PAGE, page: 0 });
       dispatch({ type: UPDATE_FILTER, filter: value });
+    },
+    updatePagination: page => {
+      dispatch({ type: UPDATE_PAGE, page });
     }
   };
 }
