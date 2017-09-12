@@ -57,6 +57,7 @@ build which can be deployed as mentioned above.
 - Destinations available when adding new flights are actually the available origins
 - Error handling is sparse
 - No front-end app loading icon
+- No tests
 
 ## Frameworks used
 
