@@ -11,7 +11,7 @@ import FlightList from '../flight-list/FlightList';
 import AirportList from '../airport-list/AirportList';
 import ManageFlights from '../manage-flights/ManageFlights';
 
-import fetchFlightData from './actions/fetch-flight-data';
+import fetchData from './actions/fetch-data';
 
 const App = () => (
   <div>
@@ -72,7 +72,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetch: () => {
-      dispatch(fetchFlightData());
+      dispatch(fetchData());
     }
   };
 }
