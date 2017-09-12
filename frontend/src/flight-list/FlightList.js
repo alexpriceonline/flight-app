@@ -11,9 +11,10 @@ const PAGEBY = 30;
 class FlightList extends Component {
 
   // When we navigate to another page we should reset
-  // the filter
+  // the filter and pagination
   componentWillUnmount() {
     this.props.updateFilter('null');
+    this.props.updatePagination(0);
   }
 
   render() {

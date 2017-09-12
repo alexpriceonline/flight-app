@@ -1,6 +1,7 @@
 import 'isomorphic-fetch';
 
 import getAvailableOrgs from '../../helpers/get-available-orgs';
+import { apiUrl } from '../../constants/db';
 import {
   APP_LOADING,
   SET_FLIGHT_DATA,
@@ -8,11 +9,9 @@ import {
   SET_AVAILABLE_ORGS,
 } from '../constants';
 
-const APIURL = '//localhost:3001';
-
 const fetchFlightData = function() {
   return (dispatch) => {
-    fetch(APIURL)
+    fetch(apiUrl)
       .then(res => {
         if (res.status >= 400) {
           throw new Error('Bad response from server');

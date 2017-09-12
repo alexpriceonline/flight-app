@@ -6,6 +6,7 @@
   "author": "Alex PRice",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.0",
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "jsonfile": "^3.0.1"

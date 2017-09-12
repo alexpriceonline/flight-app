@@ -1,9 +1,11 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const jsonfile = require('jsonfile');
 const cors = require('cors');
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
 
 // This map will hold the airports and the number of
 // flights they appear in
@@ -11,7 +13,7 @@ let airportsByAppearance = new Map();
 const flightDataFile = './flight_data.json';
 
 // Read the JSON files
-const flightData = jsonfile.readFileSync(flightDataFile);
+let flightData = jsonfile.readFileSync(flightDataFile);
 const airports = jsonfile.readFileSync('./airports.json');
 
 // Add the full airport data to the flight data
@@ -21,7 +23,6 @@ const enhancedFlightData = flightData.map(data => {
   const org = airports.find(airport => data.org === airport.iata) || {};
   const dest = airports.find(airport => data.dest === airport.iata) || {};
 
-  // 
   if (airportsByAppearance.has(data.org)) {
     const num = airportsByAppearance.get(data.org);
     airportsByAppearance.set(data.org, num + 1);
@@ -47,17 +48,21 @@ airportsByAppearance = [...airportsByAppearance.entries()];
 airportsByAppearance = airportsByAppearance.sort((a, b) => b[1] - a[1]);
 
 app.get('/', function(req, res) {
+
+  // TODO: Move the read file to here
   res.json({
     flights: enhancedFlightData,
     airports: airportsByAppearance
   });
 });
 
-// TODO
-app.post('/flights', function(req, res) {
-  var obj = {name: 'JP'};
+app.post('/', function(req, res) {
 
-  jsonfile.writeFile(flightDataFile, obj, function(error) {
+  // Add new flight to old data
+  flightData.push(req.body);
+
+  // Write out the file
+  jsonfile.writeFile(flightDataFile, flightData, function(error) {
     if (error) {
       console.error(error)
       res.json({ error });
