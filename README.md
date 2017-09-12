@@ -16,25 +16,24 @@ First clone the repo (if necessary) and `cd` into it:
   git clone git@github.com:alexpriceonline/simple-flight.git && cd simple-flight
 ```
 
-### Run the front-end
-
-Install the node dependencies:
-
-`yarn`
-
-Run the development server (localhost:3000):
-
-`yarn run start`
-
 ### Run the API server
 
-Install the node dependencies:
+In your first terminal window, navigate to the server app: `cd server`.
 
-`yarn`
+Install the node dependencies: `yarn`.
 
-Run the development server (localhost:3001):
+And run the development server (localhost:3001): `node index.js`
 
-`node index.js`
+
+### Run the front-end
+
+In a seperate terminal window, move to the front-end app: `cd frontend`.
+
+Then install the node dependencies: `yarn`
+
+Finally, run the development server (localhost:3000): `yarn run start`
+
+The application should now be visible at [localhost:3000](http://localhost:3000).
 
 ## Deployment
 
@@ -62,5 +61,7 @@ build which can be deployed as mentioned above.
 ## Frameworks used
 
 The front-end was built using the awesome [create-react-app](https://github.com/facebookincubator/create-react-app) package.
+
 The front-end state management uses [Redux](https://github.com/reactjs/redux) package.
+
 The backend was built using the [express.js](https://github.com/expressjs/express) web framework.
