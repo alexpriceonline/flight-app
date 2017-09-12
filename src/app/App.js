@@ -10,9 +10,6 @@ import FlightList from '../flight-list/FlightList';
 import AirportList from '../airport-list/AirportList';
 import ManageFlights from '../manage-flights/ManageFlights';
 
-// import Pages, { EditPage } from '../pages';
-// <Route exact path="/pages" component={Pages} />
-
 const App = () => (
   <div>
     <Route exact path="/" component={FlightList} />

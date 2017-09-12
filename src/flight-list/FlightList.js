@@ -44,7 +44,7 @@ const FlightList = props => {
           value={selectedFilter}
         >
           <option value="null">
-            None
+            Show all
           </option>
           { availableOrgs.map(org => (
               <option key={org} value={org}>
@@ -81,7 +81,7 @@ const FlightList = props => {
         select {
           margin: 0 0 0 10px;
           position: relative;
-          top: -2px;
+          top: -1px;
         }
       `}</style>
     </Layout>
